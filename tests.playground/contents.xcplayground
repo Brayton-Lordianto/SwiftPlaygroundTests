@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' buildActiveScheme='true' importAppTypes='true'>
+    <pages>
+        <page name='API test 1'/>
+        <page name='API test 2'/>
+        <page name='API test 3'/>
+        <page name='API test 3.01 GET'/>
+        <page name='API test 3.02 GET array'/>
+        <page name='API test 3.03 POST'/>
+        <page name='API tests 3.1 DB GET'/>
+        <page name='API tests 3.11 DB POST'/>
+        <page name='API tests 3.12 DB POST array'/>
+        <page name='API tests 3.13 DB POST 2'/>
+        <page name='API tests 4.0 DeSo'/>
+        <page name='API tests 4.1 Badges'/>
+        <page name='API tests 4.3 withClass'/>
+        <page name='API tests 5.0 Echo3D'/>
+        <page name='API tests 5.1 Echo3D Model'/>
+        <page name='API tests 5.2 Echo3D array'/>
+        <page name='QR code test 1.xcplaygroundpage'/>
+    </pages>
+</playground>

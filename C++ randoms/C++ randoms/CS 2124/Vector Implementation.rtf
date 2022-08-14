@@ -1,0 +1,369 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2636
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset0 Menlo-Bold;\f2\fnil\fcharset0 HelveticaNeue;
+}
+{\colortbl;\red255\green255\blue255;\red93\green108\blue121;\red255\green255\blue255;\red74\green85\blue96;
+\red0\green0\blue0;\red155\green35\blue147;\red11\green79\blue121;\red57\green0\blue160;\red28\green70\blue74;
+\red15\green104\blue160;\red28\green0\blue207;\red50\green109\blue116;\red108\green54\blue169;\red196\green26\blue22;
+\red93\green108\blue121;}
+{\*\expandedcolortbl;;\csgenericrgb\c36526\c42188\c47515;\csgenericrgb\c100000\c100000\c100000;\csgenericrgb\c29020\c33333\c37647;
+\csgenericrgb\c0\c0\c0\c85000;\csgenericrgb\c60759\c13753\c57628;\csgenericrgb\c4314\c30980\c47451;\csgenericrgb\c22454\c0\c62803;\csgenericrgb\c10981\c27276\c28869;
+\csgenericrgb\c5882\c40784\c62745;\csgenericrgb\c11000\c0\c81000;\csgenericrgb\c19418\c42935\c45455;\csgenericrgb\c42190\c21278\c66379;\csgenericrgb\c77000\c10200\c8600;
+\csgenericrgb\c36526\c42188\c47515\c35000;}
+\margl1440\margr1440\vieww9000\viewh8400\viewkind0
+\deftab543
+\pard\tx543\pardeftab543\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 //
+\f1\b \cf4 MARK: so why does end const have to be returning a const??? will get back 
+\f0\b0 \cf5 \
+\cf2 //
+\f1\b \cf4 MARK: is self checking in assignment operator undefined or just zeros for arrays? yes undefined
+\f0\b0 \cf5 \
+\
+
+\f1\b \cf6 class
+\f0\b0 \cf5  \cf7 Vector\cf5  \{\
+    
+\f1\b \cf6 friend
+\f0\b0 \cf5  \cf8 ostream\cf5 & 
+\f1\b \cf6 operator
+\f0\b0 \cf5  <<(\cf8 ostream\cf5 & os, 
+\f1\b \cf6 const
+\f0\b0 \cf5  \cf9 Vector\cf5 & vector);\
+
+\f1\b \cf6 public
+\f0\b0 \cf5 :\
+    
+\f1\b \cf6 explicit
+\f0\b0 \cf5  \cf10 Vector\cf5 (
+\f1\b \cf6 int
+\f0\b0 \cf5  count, 
+\f1\b \cf6 int
+\f0\b0 \cf5  repeating = \cf11 0\cf5 ) \{\
+        \cf12 capacity_\cf5  = count;\
+        \cf12 size_\cf5  = count;\
+        \cf12 data\cf5  = 
+\f1\b \cf6 new
+\f0\b0 \cf5  
+\f1\b \cf6 int
+\f0\b0 \cf5 [count];\
+        
+\f1\b \cf6 for
+\f0\b0 \cf5  (\cf8 size_t\cf5  i=\cf11 0\cf5 ; i<count; ++i) \cf12 data\cf5 [i] = repeating;\
+    \}\
+    \
+    \cf10 Vector\cf5 (): \cf12 capacity_\cf5 (\cf11 0\cf5 ), \cf12 size_\cf5 (\cf11 0\cf5 ), \cf12 data\cf5 (
+\f1\b \cf6 nullptr
+\f0\b0 \cf5 ) \{ \}\
+    \
+    \cf8 size_t\cf5  \cf10 size\cf5 () 
+\f1\b \cf6 const
+\f0\b0 \cf5  \{ 
+\f1\b \cf6 return
+\f0\b0 \cf5  \cf12 size_\cf5 ; \}\
+    \
+    
+\f1\b \cf6 void
+\f0\b0 \cf5  \cf10 push_back\cf5 (
+\f1\b \cf6 int
+\f0\b0 \cf5  ele) \{\
+        \cf2 // check if it exceeds the capacity.\cf5 \
+        \cf2 // if yes, extend the capacity.\cf5 \
+        \cf2 // else, do nothing.\cf5 \
+        
+\f1\b \cf6 if
+\f0\b0 \cf5  (\cf12 size_\cf5  == \cf12 capacity_\cf5 ) \{\
+            
+\f1\b \cf6 if
+\f0\b0 \cf5  (\cf12 capacity_\cf5  == \cf11 0\cf5 ) \{\
+                
+\f1\b \cf6 delete
+\f0\b0 \cf5  [] \cf12 data\cf5 ;\
+                \cf12 capacity_\cf5  = \cf11 1\cf5 ;\
+                \cf12 data\cf5  = 
+\f1\b \cf6 new
+\f0\b0 \cf5  
+\f1\b \cf6 int
+\f0\b0 \cf5 [\cf12 capacity_\cf5 ];\
+            \} 
+\f1\b \cf6 else
+\f0\b0 \cf5  \{\
+                \cf12 capacity_\cf5  *= \cf11 2\cf5 ;\
+                
+\f1\b \cf6 int
+\f0\b0 \cf5 * old = \cf12 data\cf5 ;\
+                \cf12 data\cf5  = 
+\f1\b \cf6 new
+\f0\b0 \cf5  
+\f1\b \cf6 int
+\f0\b0 \cf5 [\cf12 capacity_\cf5 ];\
+                
+\f1\b \cf6 for
+\f0\b0 \cf5  (\cf8 size_t\cf5  i=\cf11 0\cf5 ; i<\cf12 size_\cf5 ; ++i) \cf12 data\cf5 [i] = old[i]; \cf2 // *(data+i) = *(old+i)\cf5 \
+                
+\f1\b \cf6 delete
+\f0\b0 \cf5  [] old;\
+            \}\
+        \}\
+        \cf12 data\cf5 [\cf12 size_\cf5 ] = ele;\
+        \cf12 size_\cf5 ++;\
+    \}\
+    \
+	// can't be int& operator const, otherwise a backdoor opens. Runtime Error\
+    
+\f1\b \cf6 int
+\f0\b0 \cf5  
+\f1\b \cf6 operator
+\f0\b0 \cf5  [](\cf8 size_t\cf5  i) 
+\f1\b \cf6 const
+\f0\b0 \cf5  \{\
+        
+\f1\b \cf6 return
+\f0\b0 \cf5  \cf12 data\cf5 [i];\
+    \}\
+    \
+    
+\f1\b \cf6 int
+\f0\b0 \cf5 & 
+\f1\b \cf6 operator
+\f0\b0 \cf5  [](\cf8 size_t\cf5  i) \{\
+        
+\f1\b \cf6 return
+\f0\b0 \cf5  \cf12 data\cf5 [i];\
+    \}\
+    \
+    \cf2 //\cf5 \
+    \cf2 // 
+\f1\b \cf4 MARK: COPY CONTROL
+\f0\b0 \cf5 \
+    \cf2 //\cf5 \
+    ~\cf10 Vector\cf5 () \{\
+        \cf13 cout\cf5  << \cf14 "destructor called"\cf5  << \cf13 endl\cf5 ;\
+        
+\f1\b \cf6 delete
+\f0\b0 \cf5  [] \cf12 data\cf5 ;\
+    \}\
+    \
+    \cf10 Vector\cf5 (
+\f1\b \cf6 const
+\f0\b0 \cf5  \cf9 Vector\cf5 & copy): \cf12 capacity_\cf5 (copy.\cf12 capacity_\cf5 ), \cf12 size_\cf5 (copy.\cf12 size_\cf5 ) \{\
+        \cf12 data\cf5  = 
+\f1\b \cf6 new
+\f0\b0 \cf5  
+\f1\b \cf6 int
+\f0\b0 \cf5 [\cf12 capacity_\cf5 ];\
+        
+\f1\b \cf6 for
+\f0\b0 \cf5  (\cf8 size_t\cf5  i=\cf11 0\cf5 ; i<\cf12 size_\cf5 ; ++i) \cf12 data\cf5 [i] = copy.\cf12 data\cf5 [i];\
+    \}\
+    \
+    \cf9 Vector\cf5 & 
+\f1\b \cf6 operator
+\f0\b0 \cf5  =(
+\f1\b \cf6 const
+\f0\b0 \cf5  \cf9 Vector\cf5 & rhs) \{\
+        
+\f1\b \cf6 if
+\f0\b0 \cf5  (
+\f1\b \cf6 this
+\f0\b0 \cf5  == &rhs) 
+\f1\b \cf6 return
+\f0\b0 \cf5  *
+\f1\b \cf6 this
+\f0\b0 \cf5 ; \cf2 // self check needed WHY?\cf5 \
+        \cf15 ///\cf5  
+\f2 \cf2 question of
+\f0 \cf5 \
+        \cf15 ///\cf5  
+\f2 \cf2 data = new int[2];
+\f0 \cf5 \
+        \cf15 ///\cf5  
+\f2 \cf2 string "", string ""
+\f0 \cf5 \
+        \cf15 ///\cf5  
+\f2 \cf2 dara[1];
+\f0 \cf5 \
+        \cf15 ///\cf5  
+\f2 \cf2 cout << *(data+1);
+\f0 \cf5 \
+        \cf15 ///\cf5  
+\f2 \cf2 is it printing an undefined value?!
+\f0 \cf5 \
+        \cf15 ///\cf5 \
+        \cf15 ///\cf5  
+\f2 \cf2 If you delete [] data in lhs, its gone. you assign data to new int[cap] and then data[i] = rhs.data[i]
+\f0 \cf5 \
+        \cf15 ///\cf5  
+\f2 \cf2 What is the default of new (new int[2])[1]
+\f0 \cf5 \
+        \
+        \cf12 size_\cf5  = rhs.\cf12 size_\cf5 ;\
+        \cf12 capacity_\cf5  = rhs.\cf12 capacity_\cf5 ;\
+        
+\f1\b \cf6 delete
+\f0\b0 \cf5  [] \cf12 data\cf5 ;\
+        \cf12 data\cf5  = 
+\f1\b \cf6 new
+\f0\b0 \cf5  
+\f1\b \cf6 int
+\f0\b0 \cf5 [\cf12 capacity_\cf5 ];\
+        
+\f1\b \cf6 for
+\f0\b0 \cf5  (\cf8 size_t\cf5  i=\cf11 0\cf5 ; i<\cf12 size_\cf5 ; ++i) \cf12 data\cf5 [i] = rhs.\cf12 data\cf5 [i];\
+        
+\f1\b \cf6 return
+\f0\b0 \cf5  *
+\f1\b \cf6 this
+\f0\b0 \cf5 ;\
+    \}\
+    \
+    \cf2 //\cf5 \
+    \cf2 // 
+\f1\b \cf4 MARK: BEGIN AND END
+\f0\b0 \cf5 \
+    \cf2 //\cf5 \
+    \
+    
+\f1\b \cf6 const
+\f0\b0 \cf5  
+\f1\b \cf6 int
+\f0\b0 \cf5 * \cf10 begin\cf5 () 
+\f1\b \cf6 const
+\f0\b0 \cf5  \{\
+        
+\f1\b \cf6 return
+\f0\b0 \cf5  \cf12 data\cf5 ;\
+    \}\
+    \
+    
+\f1\b \cf6 int
+\f0\b0 \cf5 * \cf10 end\cf5 () 
+\f1\b \cf6 const
+\f0\b0 \cf5  \{\
+        
+\f1\b \cf6 return
+\f0\b0 \cf5  \cf12 data\cf5  + \cf12 size_\cf5 ;\
+        \cf2 // return &data[size_];\cf5 \
+    \}\
+    \
+    
+\f1\b \cf6 int
+\f0\b0 \cf5 * \cf10 begin\cf5 () \{\
+        
+\f1\b \cf6 return
+\f0\b0 \cf5  \cf12 data\cf5 ;\
+    \}\
+\
+    
+\f1\b \cf6 int
+\f0\b0 \cf5 * \cf10 end\cf5 () \{\
+        
+\f1\b \cf6 return
+\f0\b0 \cf5  \cf12 data\cf5 +\cf12 size_\cf5 ;\
+    \}\
+    \
+    \
+    \
+
+\f1\b \cf6 private
+\f0\b0 \cf5 :\
+    \cf8 size_t\cf5  capacity_;\
+    \cf8 size_t\cf5  size_;\
+    
+\f1\b \cf6 int
+\f0\b0 \cf5 * data;\
+\};\
+\
+\
+
+\f1\b \cf6 int
+\f0\b0 \cf5  \cf10 main\cf5 () \{\
+    \cf9 Vector\cf5  v;  \cf2 // Not templated.  Our Vector class can only hold ints.\cf5 \
+    v.\cf12 push_back\cf5 (\cf11 17\cf5 );\
+    v.\cf12 push_back\cf5 (\cf11 42\cf5 );\
+    v.\cf12 push_back\cf5 (\cf11 6\cf5 );\
+    v.\cf12 push_back\cf5 (\cf11 28\cf5 );\
+    \
+    \cf13 cout\cf5  << v << \cf13 endl\cf5 ;\
+    \
+    \cf9 Vector\cf5  v2 = v;\
+    \cf9 Vector\cf5  v4(v);\
+    \cf13 cout\cf5  << v2 << \cf13 endl\cf5 ;\
+    \cf13 cout\cf5  << v4 << \cf13 endl\cf5 ;\
+    \
+    \cf9 Vector\cf5  v3;\
+    v = v;\
+    \cf13 cout\cf5  << v << \cf13 endl\cf5 ;\
+    \
+    v[\cf11 0\cf5 ] = \cf11 100\cf5 ;\
+    \cf13 cout\cf5  << v << \cf13 endl\cf5 ;\
+    \
+    \cf9 Vector\cf5  v5(\cf11 17\cf5 , \cf11 42\cf5 );\
+    \cf13 cout\cf5  << v5 << \cf13 endl\cf5 ;\
+    \
+\cf2 //    v5 = Vector(1, 3);\cf5 \
+\cf2 //    cout << v5 << endl;\cf5 \
+    \
+\cf2 //    cout << "\\n";\cf5 \
+\cf2 //    v5 = 1;\cf5 \
+\cf2 //    cout << v5 << endl;\cf5 \
+    \
+    \cf2 // for (int* p=v.begin(); p<v.end(); ++p) // ptr arithmetic\cf5 \
+    
+\f1\b \cf6 for
+\f0\b0 \cf5  (
+\f1\b \cf6 int
+\f0\b0 \cf5  ele: v)\
+        \cf13 cout\cf5  << ele << \cf14 " "\cf5 ;\
+    \
+    
+\f1\b \cf6 const
+\f0\b0 \cf5  \cf9 Vector\cf5  v6(\cf11 3\cf5 , \cf11 3\cf5 );\
+    \
+    \cf2 // for (int* p=v.begin(); p<v.end() ; ++p) // begin and end needs to be const\cf5 \
+    \cf2 // for (int* p=v.begin(); p<v.end() = data+size_; ++p) // begin and end needs to be const\cf5 \
+    \cf2 // int ele = *p;\cf5 \
+    
+\f1\b \cf6 for
+\f0\b0 \cf5  (
+\f1\b \cf6 int
+\f0\b0 \cf5  ele: v6) \cf13 cout\cf5  << ele << \cf13 endl\cf5 ;\
+    \
+    \cf2 // I know that v6 is const \'96\'96> const begin and const end should be called \'96\'96> they return const int* \'96\'96> int& ele cannot work cuz not same type\cf5 \
+    \cf2 // for (const int* p=v.begin(); p<v.end() == const int* < int*; ++p)\cf5 \
+    \cf2 // int& ele = *p;\cf5 \
+\cf2 //    for (int& ele: v6) ele += 1; // this should not work!\cf5 \
+    
+\f1\b \cf6 for
+\f0\b0 \cf5  (
+\f1\b \cf6 const
+\f0\b0 \cf5  
+\f1\b \cf6 int
+\f0\b0 \cf5 & ele: v6) \cf13 cout\cf5  << ele << \cf11 ' '\cf5 ;\
+    \cf13 cout\cf5  << v6 << \cf13 endl\cf5 ;\
+    \
+    \cf2 // for (int* p=v.begin(); p<v.end(); ++p)\cf5 \
+    \cf2 // int& ele = *p; // if v was const, p would be const int*\cf5 \
+    
+\f1\b \cf6 for
+\f0\b0 \cf5  (
+\f1\b \cf6 int
+\f0\b0 \cf5 & ele: v) ele += \cf11 1\cf5 ; \cf2 // this should! so you need another begin and end\cf5 \
+    \
+    \cf13 cout\cf5  << \cf13 endl\cf5 ;\
+    \
+\}\
+\
+\cf8 ostream\cf5 & 
+\f1\b \cf6 operator
+\f0\b0 \cf5  <<(\cf8 ostream\cf5 & os, 
+\f1\b \cf6 const
+\f0\b0 \cf5  \cf9 Vector\cf5 & v) \{\
+    
+\f1\b \cf6 for
+\f0\b0 \cf5  (\cf8 size_t\cf5  i=\cf11 0\cf5 ; i<v.\cf12 size\cf5 (); ++i) os << v[i] << \cf14 " "\cf5 ;\
+    
+\f1\b \cf6 return
+\f0\b0 \cf5  os;\
+\}\
+}

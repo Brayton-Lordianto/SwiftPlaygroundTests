@@ -1,0 +1,132 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2638
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset0 Menlo-Bold;}
+{\colortbl;\red255\green255\blue255;\red93\green108\blue121;\red255\green255\blue255;\red74\green85\blue96;
+\red155\green35\blue147;\red0\green0\blue0;\red11\green79\blue121;\red15\green104\blue160;\red108\green54\blue169;
+\red196\green26\blue22;\red50\green109\blue116;\red28\green70\blue74;\red28\green0\blue207;}
+{\*\expandedcolortbl;;\csgenericrgb\c36526\c42188\c47515;\csgenericrgb\c100000\c100000\c100000;\csgenericrgb\c29020\c33333\c37647;
+\csgenericrgb\c60759\c13753\c57628;\csgenericrgb\c0\c0\c0\c85000;\csgenericrgb\c4314\c30980\c47451;\csgenericrgb\c5882\c40784\c62745;\csgenericrgb\c42190\c21278\c66379;
+\csgenericrgb\c77000\c10200\c8600;\csgenericrgb\c19418\c42935\c45455;\csgenericrgb\c10981\c27276\c28869;\csgenericrgb\c11000\c0\c81000;}
+\margl1440\margr1440\vieww9000\viewh8400\viewkind0
+\deftab543
+\pard\tx543\pardeftab543\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 // 
+\f1\b \cf4 MARK: first\
+\cf5 class
+\f0\b0 \cf6  \cf7 Testpm\cf6  \{\
+
+\f1\b \cf5 public
+\f0\b0 \cf6 :\
+   
+\f1\b \cf5 void
+\f0\b0 \cf6  \cf8 m_func1\cf6 () \{ \cf9 cout\cf6  << \cf10 "m_func1\\n"\cf6 ; \}\
+   
+\f1\b \cf5 int
+\f0\b0 \cf6  m_num;\
+    
+\f1\b \cf5 int
+\f0\b0 \cf6 * s = &\cf11 m_num\cf6 ;\
+\};\
+\
+\cf2 // Define derived types pmfn and pmd.\cf6 \
+\cf2 // These types are *pointers to members m_func1()* and\cf6 \
+\cf2 // m_num, respectively.\cf6 \
+
+\f1\b \cf5 void
+\f0\b0 \cf6  (Testpm::* pmfn)() = &\cf12 Testpm\cf6 ::\cf11 m_func1\cf6 ;\
+\cf2 // a pointer to a void function?\cf6 \
+\cf2 // a pointer to a class's function\cf6 \
+\
+\cf2 // a pointer to an int member of the class\cf6 \
+\cf2 // I mean could also be done through int* p = & obj.m_num -> not really?\cf6 \
+\cf2 // this belongs to the objecct this i know\cf6 \
+
+\f1\b \cf5 int
+\f0\b0 \cf6  Testpm::* pmd = &\cf12 Testpm\cf6 ::\cf11 m_num\cf6 ;\
+\
+
+\f1\b \cf5 int
+\f0\b0 \cf6  \cf8 main\cf6 () \{\
+   \cf12 Testpm\cf6  ATestpm;\
+    ATestpm.\cf11 m_num\cf6  = \cf13 4\cf6 ;\
+   \cf12 Testpm\cf6  *pTestpm = 
+\f1\b \cf5 new
+\f0\b0 \cf6  \cf12 Testpm\cf6 ;\
+    pTestpm->\cf11 m_num\cf6  = \cf13 3\cf6 ;\
+\
+\cf2 // Access the member function\cf6 \
+   (ATestpm.*\cf11 pmfn\cf6 )();\
+   (pTestpm->*\cf11 pmfn\cf6 )();   \cf2 // Parentheses required since * binds\cf6 \
+                        \cf2 // less tightly than the function call.\cf6 \
+\
+\cf2 // Access the member data\cf6 \
+    \cf9 cout\cf6  << ATestpm.\cf11 m_num\cf6  << \cf13 ' '\cf6 ;\
+    ATestpm.*\cf11 pmd\cf6  = \cf13 1\cf6 ; \cf2 // changes the underlying value of pmd, which is the m_num\cf6 \
+    \cf9 cout\cf6  << ATestpm.\cf11 m_num\cf6  << \cf13 '\\n'\cf6 ;\
+    \cf9 cout\cf6  << pTestpm->\cf11 m_num\cf6  << \cf9 endl\cf6 ;\
+    pTestpm->*\cf11 pmd\cf6  = \cf13 2\cf6 ;\
+\
+   \cf9 cout\cf6   << ATestpm.*\cf11 pmd\cf6  << \cf9 endl\cf6 \
+         << pTestpm->*\cf11 pmd\cf6  << \cf9 endl\cf6 ;\
+   
+\f1\b \cf5 delete
+\f0\b0 \cf6  pTestpm;\
+\}\
+\
+\cf2 // 
+\f1\b \cf4 MARK: second
+\f0\b0 \cf6 \
+\
+
+\f1\b \cf5 class
+\f0\b0 \cf6  \cf7 BaseClass\cf6  \{\
+
+\f1\b \cf5 public
+\f0\b0 \cf6 :\
+   \cf8 BaseClass\cf6 (); \cf2 // Base class constructor.\cf6 \
+   
+\f1\b \cf5 void
+\f0\b0 \cf6  \cf8 Func1\cf6 ();\
+\};\
+\
+\cf2 // Declare a pointer to member function Func1.\cf6 \
+
+\f1\b \cf5 void
+\f0\b0 \cf6  (BaseClass::*pmfnFunc1)() = &\cf12 BaseClass\cf6 ::\cf11 Func1\cf6 ; \cf2 // looks good\cf6 \
+\
+
+\f1\b \cf5 class
+\f0\b0 \cf6  \cf7 Derived\cf6  : 
+\f1\b \cf5 public
+\f0\b0 \cf6  \cf12 BaseClass\cf6  \{\
+
+\f1\b \cf5 public
+\f0\b0 \cf6 :\
+   \cf8 Derived\cf6 ();  \cf2 // Derived class constructor.\cf6 \
+   
+\f1\b \cf5 void
+\f0\b0 \cf6  \cf8 Func2\cf6 ();\
+\};\
+\
+\cf2 // Declare a pointer to member function Func2.\cf6 \
+
+\f1\b \cf5 void
+\f0\b0 \cf6  (Derived::*pmfnFunc2)() = &\cf12 Derived\cf6 ::\cf11 Func2\cf6 ;\
+\
+
+\f1\b \cf5 int
+\f0\b0 \cf6  \cf8 main\cf6 () \{\
+   \cf12 BaseClass\cf6  ABase;\
+   \cf12 Derived\cf6  ADerived;\
+\
+   (ABase.*\cf11 pmfnFunc1\cf6 )();   \cf2 // OK: defined for BaseClass.\cf6 \
+   (ABase.*\cf11 pmfnFunc2\cf6 )();   \cf2 // Error: cannot use base class to\cf6 \
+                           \cf2 // access pointers to members of\cf6 \
+                           \cf2 // derived classes. OFC\cf6 \
+\
+   (ADerived.*\cf11 pmfnFunc1\cf6 )();   \cf2 // OK: Derived is unambiguously\cf6 \
+                              \cf2 // derived from BaseClass.\cf6 \
+   (ADerived.*\cf11 pmfnFunc2\cf6 )();   \cf2 // OK: defined for Derived.\cf6 \
+\}\
+\
+}
